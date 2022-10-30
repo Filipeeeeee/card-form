@@ -9,7 +9,7 @@ Desafio da [Front-end-Mentor](https://www.frontendmentor.io/challenges/interacti
 Lista de execução para resolver o problema
 - [X] Dividir o problema por partes 
 - [X] Criar seção de formulario
-- [ ] Criar replica de um cartão frente e verso
-
+- [X] Criar replica de um cartão frente e verso
+- [X] Criar tela visual css e html
 - [ ] Retornar com erro se a pessoa colocar informação errada
 - [ ] Retornar com sucesso se todas informações foram corretas
