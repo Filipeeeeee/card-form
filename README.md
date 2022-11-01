@@ -11,5 +11,5 @@ Lista de execução para resolver o problema
 - [X] Criar seção de formulario
 - [X] Criar replica de um cartão frente e verso
 - [X] Criar tela visual css e html
-- [ ] Retornar com erro se a pessoa colocar informação errada
-- [ ] Retornar com sucesso se todas informações foram corretas
+- [X] Retornar com erro se a pessoa colocar informação errada
+- [X] Retornar com sucesso se todas informações foram corretas
