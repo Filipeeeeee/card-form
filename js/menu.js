@@ -1,177 +1,92 @@
-const cardHolder = document.getElementById("cardholder-name");
-const cardNumber = document.getElementById("card-number");
-const expiry = Array.from(document.querySelectorAll(".expiry"));
-const cvc = document.document.getElementById("cvc");
-const submit = document.getElementById("submit");
-const nameOnCard = document.querySelector(".cardholder-display");
-const numOnCard = document.querySelector(".card-number-display");
-const expMM = document.querySelector("expiry-month-display");
-const expYY = document.querySelector("expiry-year-display");
-const cvcDisplay = document.querySelector(".cvc-display");
-const thankYou = document.getElementById(".thank-you-header");
-const thankYouSection = document.getElementById(".thank-you");
-const continueBtn = document.getElementById("continue");
-const form = document.getElementById("myForm");
-const expiryErrorMsg = document.getElementById("expiry-error");
+const cardNumber = document.getElementById("number");
+const numberInp = document.getElementById("card_number");
+const nameInp = document.getElementById("card_name");
+const cardName = document.getElementById("name");
+const cardMonth = document.getElementById("month");
+const cardYear = document.getElementById("year");
+const monthInp = document.getElementById("card_month");
+const yearInp = document.getElementById("card_year");
+const cardCvc = document.getElementById("cvc");
+const cvcInp = document.getElementById("card_cvc");
+const submitBtn = document.getElementById("submit_btn");
+const compeleted = document.querySelector(".thank");
+const form = document.querySelector("form");
 
-
-
-function inputName() {
-    nameOnCard.innerHTML = cardHolder.value;
-    thankYou.innerHTML = `Thank You ${cardHolder.value}`;
-    if (nameOnCard.innerHTML == "") {
-        nameOnCard.innerHTML = cardHolder.placeholder;
-    }
+function setCardNumber(e) {
+    cardNumber.innerText = format(e.target.value);
+}
+function setCardName(e) {
+  cardName.innerText = format(e.target.value);
+}
+function setCardMonth(e) {
+  cardMonth.innerText = format(e.target.value);
+}
+function setCardYear(e) {
+  cardYear.innerText = format(e.target.value);
+}
+function setCardCvc(e) {
+  cardCvc.innerText = format(e.target.value);
 }
 
-function inputCardNum() {
-    let cardNumberInput = cardNumber.value;
-
-    let formattedCardNumber = cardNumberInput.replace(/[^\d]/g, "");
-    formattedCardNumber = formattedCardNumber.substring(0, 16);
-
-    let cardNumberSections = formattedCardNumber.match(/\d{1,4}/g);
-    if (cardNumberSections !== null) {
-        formattedCardNumber = cardNumberSections.join("");
-    }
-
-    if (cardNumberInput !== formattedCardNumber) {
-        cardNumber.value = formattedCardNumber;
-    }
-    numOnCard.innerHTML = cardNumber.value;
-    if (cardNumber.value === "") {
-        numOnCard = cardNumber.placeholder;
-    }
-}
-
-
-function inputMM() {
-    let formattedMM = expiry[0].value;
-    formattedMM = formattedMM.substring(0, 2);
-    expiry[0].value = formattedMM;
-    if (expiry[0].value === "") {
-        expMM.innerHTML = "00";
+function handleSubmit(e) {
+    e.preventDefault();
+    if (!nameInp.value) {
+      nameInp.classList.add('error');
+      nameInp.parentElement.classList.add("error_message")
     } else {
-        expMM.innerHTML = expiry[0].value;
+      nameInp.classList.remove("error");
+      nameInp.parentElement.classList.remove("error_message");
     }
-}
-
-function inputYY() {
-    let formattedYY = expiry[1].value;
-    formattedYY = formattedYY.substring(0, 4);
-    expiry[1].value = formattedYY;
-    if (expiry[1].value === "") {
-        expYY.innerHTML = "0000";
+    if (!numberInp.value) {
+      numberInp.classList.add('error')
+      numberInp.parentElement.classList.add("error_message");
+    } else if (numberInp.value.length < 16) {
+        numberInp.classList.add("error")
     } else {
-        expYY.innerHTML = expiry[1].value;
+      numberInp.classList.remove("error");
+      numberInp.parentElement.classList.remove("error_message");
     }
-}
-
-function inputCvc() {
-    let formattedCvc = cvc.value;
-
-    formattedCvc = formattedCvc.substring(0, 3);
-    cvc.value = formattedCvc;
-    if (cvc.value === "") {
-        cvcDisplay.innerHTML = "000";
+    if (!monthInp.value) {
+      monthInp.classList.add("error")
+      monthInp.parentElement.classList.add("error_message");
     } else {
-        cvcDisplay.innerHTML = cvc.value;
+      monthInp.classList.remove("error");
+      monthInp.parentElement.classList.remove("error_message");
     }
-}
-
-function massValidate() {
-    function validateName() {
-        let cardholderExp = /^[A-Z a-z]+$/;
-        let errorMsg = document.getElementById("errorMsg");
-        if (cardHolder.value.match(cardholderExp)) {
-            errorMsg.textContent = "";
-        } else {
-            errorMsg.innerHTML = "Please enter cardholder name!"
-        }
+    if (!yearInp.value) {
+      yearInp.classList.add("error")
+      yearInp.parentElement.classList.add("error_message");
+    } else {
+      yearInp.classList.remove("error");
+      yearInp.parentElement.classList.remove("error_message");
     }
-    function validateCard() {
-        let cardNumError = document.getElementById("card-num-error");
-        if (cardNumber.value.length > 0 && cardNumber.value.length < 16) {
-            cardNumError.innerHTML = "Wrong format!"
-        } else if (cardNumber.value == "") {
-            cardNumError.innerHTML = "Can't be blank"
-        } else {
-            cardNumError.innerHTML = "";
-        }
+    if (!cvcInp.value) {
+      cvcInp.classList.add("error")
+      cvcInp.parentElement.classList.add("error_message");
+    } else {
+      cvcInp.classList.remove("error");
+      cvcInp.parentElement.classList.remove("error_message");
     }
-    function validateExpiry() {
-
-        let expMonth = /^(0[0-9]|1[1-2]){2}$/;
-        let expYear = /^[0-9][0-2]{4}$/;
-
-        if (expiry[0].value.match(expMonth)) {
-            expiryErrorMsg.innerHTML = "";
-        } else if (
-            expiry[0].value.match(expMonth) &&
-            expiry[1].value.match(expYear)
-        ) {
-            expiryErrorMsg.innerHTML = "";
-        } else if (expiry[0] == "") {
-            expiryErrorMsg.innerHTML = "Can't be blank!";
-        } else {
-            expiryErrorMsg.innerHTML = "Wrong format";
-        }
-    }
-
-    function validateCvc() {
-        let cvcErrorMsg = document.getElementById("error-cvc");
-        let cvcExp = /^[0-9]{3}$/;
-        if (cvc.value === "") {
-            cvcErrorMsg.innerHTML = "Can't be blank";
-        } else if (cvc.value.match(cvcExp)) {
-            cvcErrorMsg.innerHTML = "";
-        } else {
-            cvcErrorMsg.innerHTML = "Wrong format!";
-        }
-    }
-
-    validateCard();
-    validateName();
-    validateExpiry();
-    validateCvc();
     if (
-        nameOnCard.innerHTML == cardHolder.placeholder ||
-        numOnCard.innerHTML == cardNumber.placeholder ||
-        expMM.innerHTML == "00" ||
-        expYY.innerHTML == "0000" ||
-        cvcDisplay.innerHTML == "000" ||
-        (cardNumber.value.length > 0 && cardNumber.value.length < 16)
+      nameInp.value &&
+      numberInp.value &&
+      monthInp.value &&
+      yearInp.value &&
+      cvcInp.value &&
+      numberInp.value.length == 16
     ) {
-        return false;
-    } else {
-        return true;
+      compeleted.classList.remove("hidden");
+      form.classList.add("hidden");
     }
+  
 }
- submit.addEventListener("click", function (){
-    massValidate();
-    if (massValidate() == false){
-        event.preventDefault();
-    } else {
-        event.preventDefault();
+function format(s) {
+  return s.toString().replace(/\d{4}(?=.)/g, "$& ");
+}
 
-        form.classList.add("hidden");
-        thankYouSection.classList.remove("hidden");
-    }
- });
-
-continueBtn.addEventListener("click", function () {
-    event.preventDefault();
-    thankYouSection.classList.add("hidden");
-    form.classList.remove("hidden");
-    nameOnCard.innerHTML = cardHolder.placeholder;
-    numOnCard.innerHTML = cardNumber.placeholder;
-    expMM.innerHTML = "00";
-    expYY.innerHTML = "0000";
-    cvcDisplay.innerHTML = "000";
-    cardHolder.value = "";
-    cardNumber.value = "";
-    expiry[0].value = "";
-    expiry[1].value = "";
-    cvc.value = "";
-    expiryErrorMsg.innerHTML = "";
-})
+numberInp.addEventListener("keyup", setCardNumber);
+nameInp.addEventListener("keyup", setCardName);
+monthInp.addEventListener("keyup", setCardMonth);
+yearInp.addEventListener("keyup", setCardYear);
+cvcInp.addEventListener("keyup", setCardCvc);
+submitBtn.addEventListener("click", handleSubmit);
