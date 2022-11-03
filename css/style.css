@@ -127,6 +127,7 @@ input {
     font-size: 18px;
     border: 1px solid var(--Dark-grayish-violet);
     border-radius: 6px;
+    background: #ffff;
 }
 
 input::-webkit-outer-spin-button,
